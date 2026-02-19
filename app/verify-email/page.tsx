@@ -1,6 +1,6 @@
  "use client";
  
- import { useEffect, useState } from "react";
+ import { useEffect, useState, Suspense } from "react";
  import { useRouter, useSearchParams } from "next/navigation";
  import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
  import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@
  import { useAuth } from "@/lib/auth/auth-context";
  import { Loader2, MailCheck, AlertCircle } from "lucide-react";
  
- export default function VerifyEmailPage() {
+ function VerifyEmailContent() {
    const router = useRouter();
    const searchParams = useSearchParams();
    const { isAuthenticated } = useAuth();
@@ -101,6 +101,14 @@
          </CardFooter>
        </Card>
      </div>
+   );
+ }
+ 
+ export default function VerifyEmailPage() {
+   return (
+     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
+       <VerifyEmailContent />
+     </Suspense>
    );
  }
  
